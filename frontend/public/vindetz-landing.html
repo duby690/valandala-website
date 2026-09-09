@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Vindetz – Marketplace românesc pentru produse second-hand. Lansare în curând pe vindetz.ro. Cumpără. Vinde. Fă bine.">
+  <meta property="og:title" content="Vindetz — Lansare în Curând">
+  <meta property="og:description" content="Marketplace românesc pentru haine, electronice și mult mai mult. Simplu. Sigur. Aproape de tine.">
+  <meta property="og:url" content="https://vindetz.ro">
+  <title>Vindetz — Lansare în Curând | Cumpără. Vinde. Fă bine.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js" onerror="window._lenisBlocked=true"></script>
+
+  <noscript>
+    <style>
+      .hero-title,.hero-badge,.hero-tagline,.hero-right,.hero-scroll-hint,
+      .chapter-row,.step,.cat-card,.val-card,.launch-badge,.launch-h2,
+      .launch-p,.app-btns,.js-reveal,.js-reveal-dark {
+        opacity:1!important;transform:none!important;
+      }
+    </style>
+  </noscript>
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────── */
+    :root {
+      --ink:       #07100a;
+      --ink2:      #0c160d;
+      --forest:    #132016;
+      --forest-m:  #1a3a1f;
+      --green:     #2b6435;
+      --lime:      #8cc43c;
+      --orange:    #e55f26;
+      --cream:     #f1e9d9;
+      --cream-l:   #faf4ea;
+      --off:       #f6f0e4;
+      --gray:      #7a7a68;
+      --gray-l:    #c0bfb0;
+
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans:  'Inter', -apple-system, system-ui, sans-serif;
+
+      --expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --circ: cubic-bezier(0.85, 0, 0.15, 1);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:auto; -webkit-font-smoothing:antialiased; }
+    body { font-family:var(--sans); background:var(--cream); color:var(--ink); overflow-x:hidden; cursor:none; }
+    @media (hover:none) { body { cursor:auto; } }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; width:100%; height:100%; object-fit:cover; }
+
+    /* ─── CURSOR ─────────────────────────────── */
+    #cur {
+      position:fixed; width:9px; height:9px;
+      background:var(--orange); border-radius:50%;
+      pointer-events:none; z-index:9999;
+      transform:translate(-50%,-50%);
+      transition: width .4s var(--expo), height .4s var(--expo), background .3s;
+      will-change:transform;
+    }
+    #cur-ring {
+      position:fixed; width:34px; height:34px;
+      border:1.5px solid rgba(229,95,38,.4);
+      border-radius:50%; pointer-events:none;
+      z-index:9998; transform:translate(-50%,-50%);
+      will-change:transform;
+      transition: width .4s var(--expo), height .4s var(--expo), opacity .3s;
+    }
+    #cur.big { width:52px; height:52px; background:rgba(229,95,38,.1); }
+    #cur-ring.big { width:62px; height:62px; opacity:0; }
+    @media (hover:none),(max-width:768px) { #cur,#cur-ring { display:none; } }
+
+    /* ─── NAV ────────────────────────────────── */
+    #nav {
+      position:fixed; inset:0 0 auto;
+      z-index:200; padding:1.5rem 3rem;
+      display:flex; align-items:center; justify-content:space-between;
+      transition: background .5s, backdrop-filter .5s;
+    }
+    #nav.scrolled {
+      background:rgba(7,16,10,.93);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+    }
+    .nav-logo {
+      font-family:var(--sans); font-weight:900;
+      font-size:1.4rem; letter-spacing:-.05em;
+      color:#fff; display:flex; align-items:center;
+    }
+    .nav-logo .ltag {
+      display:inline-block;
+      background:var(--orange); width:14px; height:11px;
+      clip-path:polygon(0 0,65% 0,100% 50%,65% 100%,0 100%);
+      margin-left:3px; position:relative; flex-shrink:0;
+    }
+    .nav-logo .ltag::after {
+      content:''; position:absolute;
+      width:4px; height:4px; background:#fff;
+      border-radius:50%; top:50%; left:28%;
+      transform:translate(-50%,-50%);
+    }
+    .nav-pill {
+      display:flex; align-items:center; gap:.5rem;
+      background:rgba(229,95,38,.13);
+      border:1px solid rgba(229,95,38,.32);
+      color:var(--orange); font-size:.62rem; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase;
+      padding:.45rem 1rem; border-radius:100px;
+    }
+    .nav-pill .dot {
+      width:5px; height:5px; background:currentColor;
+      border-radius:50%; animation:blink 2s ease infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+    .nav-url {
+      font-size:.8rem; font-weight:600;
+      color:rgba(255,255,255,.65); letter-spacing:.03em;
+      transition:color .3s;
+    }
+    .nav-url:hover { color:#fff; }
+    @media(max-width:768px) {
+      #nav { padding:1.2rem 1.5rem; }
+      .nav-url { display:none; }
+    }
+
+    /* ─── HERO ───────────────────────────────── */
+    #hero {
+      min-height:100svh; background:var(--ink);
+      position:relative; overflow:hidden;
+      display:flex; align-items:flex-end;
+      padding:0 3rem 5rem;
+    }
+    #hero::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 70% 65% at 20% 75%, rgba(43,100,53,.3) 0%,transparent 55%),
+        radial-gradient(ellipse 45% 40% at 80% 15%, rgba(229,95,38,.06) 0%,transparent 50%);
+    }
+    #hero::after {
+      content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+      opacity:.38;
+    }
+    .hero-inner {
+      position:relative; z-index:2;
+      width:100%; max-width:1600px; margin:0 auto;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:rgba(229,95,38,.11);
+      border:1px solid rgba(229,95,38,.28);
+      color:var(--orange); font-size:.62rem; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      padding:.45rem 1.1rem; border-radius:100px;
+      margin-bottom:2.8rem;
+      opacity:0; transform:translateY(18px);
+    }
+    .htw { overflow:hidden; }
+    .hero-title {
+      font-family:var(--sans); font-weight:900;
+      font-size:clamp(5rem,16vw,15.5rem);
+      line-height:.87; letter-spacing:-.045em;
+      color:#fff; display:block;
+      transform:translateY(108%); will-change:transform;
+    }
+    .htw.alt .hero-title {
+      color:transparent;
+      -webkit-text-stroke:2px rgba(255,255,255,.22);
+    }
+    .hero-foot {
+      display:flex; justify-content:space-between; align-items:flex-end;
+      margin-top:3rem; gap:2rem;
+    }
+    .hero-tagline {
+      font-family:var(--serif); font-style:italic;
+      font-size:clamp(1rem,2.1vw,1.75rem);
+      color:rgba(255,255,255,.6); line-height:1.38;
+      opacity:0; transform:translateY(18px);
+    }
+    .hero-right {
+      text-align:right; opacity:0; transform:translateY(18px);
+    }
+    .hero-desc {
+      font-size:.83rem; color:rgba(255,255,255,.38);
+      line-height:1.65; max-width:270px; margin-left:auto; margin-bottom:1rem;
+    }
+    .chips { display:flex; gap:.38rem; flex-wrap:wrap; justify-content:flex-end; }
+    .chip {
+      background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+      color:rgba(255,255,255,.48); font-size:.66rem; font-weight:500;
+      letter-spacing:.04em; padding:.28rem .65rem; border-radius:100px;
+    }
+    .hero-scroll-hint {
+      position:absolute; bottom:4rem; right:3rem;
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      z-index:2; opacity:0;
+    }
+    .hero-scroll-hint span {
+      writing-mode:vertical-rl; font-size:.58rem;
+      letter-spacing:.22em; text-transform:uppercase;
+      color:rgba(255,255,255,.28);
+    }
+    .scroll-track {
+      width:1px; height:52px;
+      background:rgba(255,255,255,.1);
+      position:relative; overflow:hidden;
+    }
+    .scroll-track::after {
+      content:''; position:absolute; top:0; left:0; right:0; height:40%;
+      background:var(--orange);
+      animation:scrollA 2.2s var(--expo) infinite;
+    }
+    @keyframes scrollA {
+      0%{transform:translateY(-100%);opacity:0}
+      30%{opacity:1} 100%{transform:translateY(300%);opacity:0}
+    }
+    @media(max-width:768px) {
+      #hero { padding:0 1.5rem 3.5rem; }
+      .hero-title { font-size:clamp(4.2rem,18vw,7rem); }
+      .hero-foot { flex-direction:column; align-items:flex-start; }
+      .hero-right { text-align:left; }
+      .chips { justify-content:flex-start; }
+      .hero-desc { margin-left:0; }
+      .hero-scroll-hint { display:none; }
+    }
+
+    /* ─── MARQUEE ────────────────────────────── */
+    .mqbar {
+      background:var(--forest-m); padding:.95rem 0; overflow:hidden;
+      border-top:1px solid rgba(255,255,255,.04);
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+    .mqtrack {
+      display:flex; white-space:nowrap;
+      animation:mqfwd 28s linear infinite;
+    }
+    @keyframes mqfwd { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .mqi {
+      display:inline-flex; align-items:center; gap:1rem;
+      padding:0 2rem; font-size:.69rem; font-weight:700;
+      letter-spacing:.18em; text-transform:uppercase;
+      color:rgba(255,255,255,.38);
+    }
+    .mqi .s { color:var(--orange); opacity:.75; }
+
+    /* ─── EYEBROW ────────────────────────────── */
+    .eyebrow {
+      display:flex; align-items:center; gap:.8rem;
+      font-size:.66rem; font-weight:700; letter-spacing:.2em;
+      text-transform:uppercase; color:var(--orange);
+      margin-bottom:1.4rem;
+    }
+    .eyebrow::before { content:''; width:2.4rem; height:1px; background:currentColor; flex-shrink:0; }
+    .eyebrow-dim { color:rgba(229,95,38,.8); }
+
+    /* ─── MANIFESTO ──────────────────────────── */
+    #manifesto {
+      padding:9rem 3rem; background:var(--cream-l);
+    }
+    .mf-head {
+      max-width:1440px; margin:0 auto 5rem;
+      display:grid; grid-template-columns:1fr auto;
+      align-items:end; gap:2rem;
+    }
+    .mf-head h2 {
+      font-family:var(--serif);
+      font-size:clamp(2.8rem,5.5vw,5.5rem);
+      font-weight:700; line-height:1.05; letter-spacing:-.03em;
+    }
+    .mf-head h2 em { color:var(--green); }
+    .mf-head p {
+      max-width:210px; font-size:.84rem; color:var(--gray);
+      line-height:1.65; text-align:right; padding-bottom:.2rem;
+    }
+    .ch-row {
+      max-width:1440px; margin:0 auto;
+      display:grid; grid-template-columns:210px 1fr;
+      gap:3rem 5rem; padding:3.5rem 0;
+      border-top:1px solid rgba(0,0,0,.07);
+      align-items:start;
+      opacity:0; transform:translateY(35px);
+    }
+    .ch-num-label {
+      font-size:.62rem; font-weight:700; letter-spacing:.18em;
+      text-transform:uppercase; color:var(--orange);
+      display:block; margin-bottom:.4rem;
+    }
+    .ch-num-big {
+      font-family:var(--serif); font-size:5rem; font-weight:900;
+      line-height:1; letter-spacing:-.05em;
+      color:rgba(0,0,0,.04); display:block;
+    }
+    .ch-body h3 {
+      font-family:var(--serif);
+      font-size:clamp(1.6rem,2.7vw,2.7rem);
+      font-weight:700; line-height:1.15; letter-spacing:-.02em;
+      margin-bottom:1.2rem;
+    }
+    .ch-body h3 em { color:var(--green); }
+    .ch-body p {
+      font-size:.93rem; color:var(--gray);
+      line-height:1.75; max-width:540px; margin-bottom:2rem;
+    }
+    .tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag {
+      background:rgba(43,100,53,.09); color:var(--green);
+      border:1px solid rgba(43,100,53,.18); font-size:.72rem;
+      font-weight:600; padding:.36rem .82rem; border-radius:100px;
+    }
+    @media(max-width:900px) {
+      #manifesto { padding:5rem 1.5rem; }
+      .mf-head { grid-template-columns:1fr; }
+      .mf-head p { text-align:left; }
+      .ch-row { grid-template-columns:1fr; gap:1.5rem; }
+    }
+
+    /* ─── HOW IT WORKS ───────────────────────── */
+    #how {
+      padding:9rem 3rem; background:var(--ink2);
+      position:relative; overflow:hidden;
+    }
+    #how::before {
+      content:''; position:absolute; bottom:0; left:0; right:0;
+      height:60%; pointer-events:none;
+      background:radial-gradient(ellipse 80% 65% at 50% 100%, rgba(43,100,53,.14) 0%,transparent 65%);
+    }
+    .how-inner { max-width:1440px; margin:0 auto; position:relative; z-index:1; }
+    .how-head {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:3rem; align-items:end; margin-bottom:5rem;
+    }
+    .how-head h2 {
+      font-family:var(--serif);
+      font-size:clamp(2.5rem,5vw,5rem);
+      font-weight:700; letter-spacing:-.03em;
+      line-height:1.05; color:#fff;
+    }
+    .how-head .sub {
+      font-size:.88rem; color:rgba(255,255,255,.38);
+      line-height:1.7; max-width:300px;
+    }
+    .steps {
+      display:grid; grid-template-columns:repeat(5,1fr);
+      position:relative;
+    }
+    .steps::before {
+      content:''; position:absolute; top:1.85rem;
+      left:calc(10% + 1.9rem); right:calc(10% + 1.9rem);
+      height:1px; border-top:1px dashed rgba(255,255,255,.08); z-index:0;
+    }
+    .step {
+      padding:0 1.5rem; position:relative; z-index:1;
+      opacity:0; transform:translateY(25px);
+    }
+    .step-c {
+      width:3.8rem; height:3.8rem; border-radius:50%;
+      border:1.5px solid rgba(255,255,255,.1); background:var(--ink2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.68rem; font-weight:700; color:rgba(255,255,255,.32);
+      margin-bottom:2rem; letter-spacing:.05em;
+      transition:border-color .3s,background .3s,color .3s,box-shadow .3s;
+    }
+    .step-c.lit {
+      border-color:var(--orange); background:var(--orange); color:#fff;
+      box-shadow:0 0 28px rgba(229,95,38,.3);
+    }
+    .step h4 {
+      font-family:var(--serif); font-size:1.12rem; font-weight:700;
+      color:#fff; margin-bottom:.7rem; line-height:1.2;
+    }
+    .step p { font-size:.8rem; color:rgba(255,255,255,.37); line-height:1.65; }
+    @media(max-width:1100px) {
+      .steps { grid-template-columns:1fr 1fr 1fr; gap:2.5rem; }
+      .steps::before { display:none; }
+      .how-head { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      #how { padding:5rem 1.5rem; }
+      .steps { grid-template-columns:1fr; gap:2rem; }
+      .step { padding:0; }
+    }
+
+    /* ─── CATEGORIES ─────────────────────────── */
+    #cats { padding:9rem 3rem; background:var(--cream); }
+    .cat-head {
+      max-width:1440px; margin:0 auto 4rem;
+      display:flex; justify-content:space-between; align-items:flex-end;
+    }
+    .cat-head h2 {
+      font-family:var(--serif);
+      font-size:clamp(2.5rem,5vw,5rem);
+      font-weight:700; letter-spacing:-.03em; line-height:1.05;
+    }
+    .cat-head p {
+      max-width:250px; font-size:.87rem;
+      color:var(--gray); line-height:1.65; text-align:right;
+    }
+    .cat-grid {
+      max-width:1440px; margin:0 auto;
+      display:grid; grid-template-columns:2fr 1fr 1fr;
+      grid-template-rows:auto auto; gap:1rem;
+    }
+    .cat-card {
+      border-radius:1.3rem; overflow:hidden;
+      position:relative; cursor:none;
+      opacity:0; transform:translateY(25px) scale(.98);
+    }
+    .cat-card:nth-child(1) { grid-row:span 2; min-height:580px; }
+    .cat-card:nth-child(n+2) { min-height:255px; }
+    .cat-img { position:absolute; inset:0; transition:transform .8s var(--expo); }
+    .cat-card:hover .cat-img { transform:scale(1.06); }
+    .cat-ov {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.08) 55%, transparent 100%);
+    }
+    .cat-info { position:absolute; bottom:1.4rem; left:1.4rem; right:1.4rem; }
+    .cat-eye {
+      font-size:.6rem; font-weight:700; letter-spacing:.18em;
+      text-transform:uppercase; color:rgba(255,255,255,.52); margin-bottom:.22rem;
+    }
+    .cat-name {
+      font-family:var(--serif); font-size:1.45rem; font-weight:700; color:#fff;
+    }
+    .cat-card:nth-child(1) .cat-name { font-size:2.1rem; }
+    @media(max-width:1024px) {
+      .cat-grid { grid-template-columns:1fr 1fr; }
+      .cat-card:nth-child(1) { grid-row:span 1; min-height:300px; }
+    }
+    @media(max-width:768px) {
+      #cats { padding:5rem 1.5rem; }
+      .cat-head { flex-direction:column; align-items:flex-start; gap:1rem; }
+      .cat-head p { text-align:left; }
+      .cat-grid { grid-template-columns:1fr; }
+      .cat-card { min-height:210px!important; }
+      .cat-card:nth-child(1) { min-height:270px!important; }
+    }
+
+    /* ─── VALUES ─────────────────────────────── */
+    #values {
+      padding:9rem 3rem; background:var(--forest);
+      position:relative; overflow:hidden;
+    }
+    #values::before {
+      content:''; position:absolute; top:-180px; right:-180px;
+      width:560px; height:560px; border-radius:50%; pointer-events:none;
+      background:radial-gradient(circle, rgba(43,100,53,.25) 0%,transparent 70%);
+    }
+    .val-inner {
+      max-width:1440px; margin:0 auto;
+      display:grid; grid-template-columns:5fr 4fr;
+      gap:6rem; align-items:center;
+    }
+    .val-text h2 {
+      font-family:var(--serif);
+      font-size:clamp(2.2rem,4vw,4.2rem);
+      font-weight:700; line-height:1.15; letter-spacing:-.03em;
+      color:#fff; margin-bottom:1.8rem;
+    }
+    .val-text h2 em { color:var(--lime); font-style:italic; }
+    .val-text p {
+      font-size:.9rem; color:rgba(255,255,255,.43);
+      line-height:1.75; max-width:430px;
+    }
+    .val-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .val-card {
+      padding:1.8rem; background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:1.2rem; opacity:0; transform:translateY(18px);
+      transition:background .3s;
+    }
+    .val-card:hover { background:rgba(255,255,255,.07); }
+    .val-ico {
+      width:2.6rem; height:2.6rem; border-radius:.6rem;
+      background:rgba(140,196,60,.12);
+      border:1px solid rgba(140,196,60,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; color:var(--lime); margin-bottom:1.1rem;
+    }
+    .val-card h4 {
+      font-family:var(--serif); font-size:1.05rem;
+      font-weight:700; color:#fff; margin-bottom:.5rem;
+    }
+    .val-card p { font-size:.79rem; color:rgba(255,255,255,.37); line-height:1.6; }
+    @media(max-width:1024px) { .val-inner { grid-template-columns:1fr; gap:4rem; } }
+    @media(max-width:768px) {
+      #values { padding:5rem 1.5rem; }
+      .val-grid { grid-template-columns:1fr; }
+    }
+
+    /* ─── STATS ──────────────────────────────── */
+    #stats { padding:4.5rem 3rem; background:var(--forest-m); }
+    .stats-g {
+      max-width:1440px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:1px; background:rgba(255,255,255,.06);
+    }
+    .stat-item {
+      padding:2.5rem 2rem;
+      background:var(--forest-m); text-align:center;
+    }
+    .stat-num {
+      font-family:var(--sans); font-weight:900;
+      font-size:clamp(2.5rem,4.5vw,4rem);
+      color:#fff; letter-spacing:-.04em; line-height:1; margin-bottom:.45rem;
+    }
+    .stat-num .an { color:var(--lime); }
+    .stat-label { font-size:.77rem; font-weight:500; color:rgba(255,255,255,.33); }
+    @media(max-width:768px) {
+      #stats { padding:3rem 1.5rem; }
+      .stats-g { grid-template-columns:1fr 1fr; }
+    }
+
+    /* ─── LAUNCH ─────────────────────────────── */
+    #launch {
+      padding:10rem 3rem; background:var(--off);
+      text-align:center; position:relative; overflow:hidden;
+    }
+    #launch::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 70% 55% at 50% 85%, rgba(43,100,53,.07) 0%,transparent 60%);
+    }
+    #launch::after {
+      content:'2025';
+      position:absolute; font-family:var(--sans); font-weight:900;
+      font-size:clamp(9rem,28vw,28rem); letter-spacing:-.05em;
+      color:transparent; -webkit-text-stroke:1.5px rgba(0,0,0,.04);
+      bottom:-1rem; left:50%; transform:translateX(-50%);
+      pointer-events:none; white-space:nowrap; line-height:1;
+    }
+    .launch-inner { position:relative; z-index:1; max-width:760px; margin:0 auto; }
+    .launch-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:rgba(229,95,38,.1);
+      border:1px solid rgba(229,95,38,.25);
+      color:var(--orange); font-size:.62rem; font-weight:700;
+      letter-spacing:.14em; text-transform:uppercase;
+      padding:.45rem 1rem; border-radius:100px;
+      margin-bottom:2.5rem;
+    }
+    .launch-h2 {
+      font-family:var(--serif); font-size:clamp(3rem,8vw,8rem);
+      font-weight:900; line-height:.93; letter-spacing:-.04em;
+      margin-bottom:2rem;
+    }
+    .launch-h2 .outline { -webkit-text-stroke:2px var(--ink); color:transparent; }
+    .launch-p {
+      font-size:.98rem; color:var(--gray); line-height:1.7;
+      margin-bottom:3.5rem; max-width:440px; margin-left:auto; margin-right:auto;
+    }
+    .app-btns {
+      display:inline-flex; gap:1rem; flex-wrap:wrap;
+      justify-content:center;
+    }
+    .app-btn {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--ink); color:#fff;
+      padding:1.1rem 2rem; border-radius:1rem;
+      border:1.5px solid rgba(255,255,255,.1);
+      transition:transform .4s var(--expo), box-shadow .4s, border-color .3s;
+      position:relative; overflow:hidden;
+    }
+    .app-btn::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,.04) 0%, transparent 60%);
+    }
+    .app-btn:hover { transform:translateY(-5px); box-shadow:0 24px 50px rgba(0,0,0,.22); border-color:rgba(255,255,255,.18); }
+    .app-btn-icon { font-size:1.6rem; flex-shrink:0; }
+    .app-btn-text { text-align:left; }
+    .app-btn-text small {
+      display:block; font-size:.58rem; opacity:.5; font-weight:500;
+      letter-spacing:.08em; text-transform:uppercase; margin-bottom:.15rem;
+    }
+    .app-btn-text strong { font-size:.95rem; font-weight:700; letter-spacing:-.01em; }
+    .app-btn-text .soon {
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.58rem; font-weight:600; color:var(--orange);
+      letter-spacing:.05em; text-transform:uppercase; margin-top:.2rem;
+    }
+    .app-btn-text .soon::before {
+      content:''; width:5px; height:5px; background:var(--orange);
+      border-radius:50%; animation:blink 2s infinite; flex-shrink:0;
+    }
+    .app-btn.and-btn { background:#0d2218; }
+    @media(max-width:768px) { #launch { padding:6rem 1.5rem; } }
+
+    /* ─── FOOTER ─────────────────────────────── */
+    #footer { padding:5rem 3rem 3rem; background:var(--ink); position:relative; }
+    #footer::before {
+      content:''; position:absolute; top:0; left:3rem; right:3rem;
+      height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);
+    }
+    #footer::after {
+      content:'VINDETZ';
+      position:absolute; font-family:var(--sans); font-weight:900;
+      font-size:clamp(7rem,18vw,18rem); letter-spacing:-.05em;
+      color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.035);
+      bottom:0; left:50%; transform:translateX(-50%);
+      pointer-events:none; white-space:nowrap; line-height:1;
+    }
+    .foot-main {
+      max-width:1440px; margin:0 auto; position:relative; z-index:1;
+      display:grid; grid-template-columns:1fr 1fr 1fr;
+      gap:4rem; padding-bottom:4rem;
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .foot-brand .f-logo {
+      font-family:var(--sans); font-weight:900; font-size:2.6rem;
+      letter-spacing:-.05em; color:#fff; line-height:1; margin-bottom:.9rem;
+    }
+    .foot-brand .f-logo sup {
+      font-size:.5em; background:var(--orange); color:#fff;
+      padding:.1em .3em; border-radius:.25rem;
+      vertical-align:super; margin-top:.15em;
+    }
+    .foot-brand .f-sub {
+      font-size:.84rem; color:rgba(255,255,255,.33);
+      line-height:1.65; max-width:270px; margin-bottom:1.5rem;
+    }
+    .foot-tagline {
+      font-family:var(--serif); font-style:italic;
+      font-size:1.2rem; color:rgba(255,255,255,.52);
+    }
+    .foot-col h5 {
+      font-size:.65rem; font-weight:700; letter-spacing:.18em;
+      text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:1.4rem;
+    }
+    .foot-col ul { list-style:none; }
+    .foot-col li { margin-bottom:.75rem; }
+    .foot-col a {
+      font-size:.84rem; color:rgba(255,255,255,.42); transition:color .3s;
+    }
+    .foot-col a:hover { color:#fff; }
+    .foot-bottom {
+      max-width:1440px; margin:2rem auto 0;
+      display:flex; justify-content:space-between; align-items:center;
+      position:relative; z-index:1;
+    }
+    .foot-copy { font-size:.7rem; color:rgba(255,255,255,.17); }
+    .foot-loc {
+      display:flex; align-items:center; gap:.45rem;
+      font-size:.76rem; color:rgba(255,255,255,.25);
+    }
+    .foot-url { font-size:.84rem; font-weight:700; color:var(--orange); }
+    @media(max-width:900px) { .foot-main { grid-template-columns:1fr; gap:3rem; } }
+    @media(max-width:768px) {
+      #footer { padding:3.5rem 1.5rem 2rem; }
+      .foot-bottom { flex-direction:column; gap:.8rem; align-items:flex-start; }
+    }
+
+    /* ─── BACK TO TOP ────────────────────────── */
+    #btt {
+      position:fixed; bottom:2rem; right:2rem;
+      width:2.8rem; height:2.8rem; background:var(--orange); color:#fff;
+      border:none; border-radius:50%; cursor:none;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.9rem; z-index:150;
+      opacity:0; transform:translateY(12px);
+      transition:opacity .3s,transform .3s,box-shadow .3s;
+    }
+    #btt.show { opacity:1; transform:translateY(0); }
+    #btt:hover { box-shadow:0 8px 28px rgba(229,95,38,.4); }
+    @media(hover:none) { #btt { cursor:auto; } }
+
+    /* ─── HERO INITIAL (JS overrides these via gsap.set) ── */
+    .hero-title { transform:translateY(108%); }
+    .hero-badge, .hero-tagline, .hero-right, .hero-scroll-hint { opacity:0; }
+
+    /* ─── MOTION PREFERENCES ─────────────────── */
+    @media(prefers-reduced-motion:reduce) {
+      *,*::before,*::after {
+        animation-duration:.01ms!important;
+        transition-duration:.01ms!important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div id="cur"></div>
+  <div id="cur-ring"></div>
+
+  <!-- Back to top -->
+  <button id="btt" aria-label="Înapoi sus"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- ═══ NAV ══════════════════════════════════ -->
+  <nav id="nav">
+    <a href="https://vindetz.ro" class="nav-logo">
+      VINDETZ<span class="ltag"></span>
+    </a>
+    <div class="nav-pill">
+      <span class="dot"></span>
+      Lansare în Curând
+    </div>
+    <a href="https://vindetz.ro" class="nav-url">vindetz.ro &rarr;</a>
+  </nav>
+
+  <!-- ═══ HERO ══════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot" style="width:5px;height:5px;background:currentColor;border-radius:50%;animation:blink 2s ease infinite;"></span>
+        Lansare în Curând &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; Din Cluj
+      </div>
+
+      <div class="htw"><span class="hero-title">VINDE</span></div>
+      <div class="htw alt"><span class="hero-title">TZ.</span></div>
+
+      <div class="hero-foot">
+        <div class="hero-tagline">
+          Lucrurile bune<br>
+          merită o a doua viață.
+        </div>
+        <div class="hero-right">
+          <p class="hero-desc">Marketplace românesc pentru haine, electronice, obiecte de uz casnic și multe altele. Simplu. Sigur. Aproape de tine.</p>
+          <div class="chips">
+            <span class="chip">Haine</span>
+            <span class="chip">Electronice</span>
+            <span class="chip">Casă &amp; Grădină</span>
+            <span class="chip">Sport &amp; Hobby</span>
+            <span class="chip">Auto</span>
+            <span class="chip">Colecționabile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-track"></div>
+    </div>
+  </section>
+
+  <!-- ═══ MARQUEE ═══════════════════════════════ -->
+  <div class="mqbar">
+    <div class="mqtrack">
+      <span class="mqi">SUSTENABIL <span class="s">·</span></span>
+      <span class="mqi">COMUNITATE <span class="s">·</span></span>
+      <span class="mqi">SIGUR <span class="s">·</span></span>
+      <span class="mqi">PREȚURI CORECTE <span class="s">·</span></span>
+      <span class="mqi">DIN CLUJ <span class="s">·</span></span>
+      <span class="mqi">PENTRU ROMÂNIA <span class="s">·</span></span>
+      <span class="mqi">CUMPĂRĂ <span class="s">·</span></span>
+      <span class="mqi">VINDE <span class="s">·</span></span>
+      <span class="mqi">FĂ BINE <span class="s">·</span></span>
+      <span class="mqi">SECOND-HAND <span class="s">·</span></span>
+      <span class="mqi">SUSTENABIL <span class="s">·</span></span>
+      <span class="mqi">COMUNITATE <span class="s">·</span></span>
+      <span class="mqi">SIGUR <span class="s">·</span></span>
+      <span class="mqi">PREȚURI CORECTE <span class="s">·</span></span>
+      <span class="mqi">DIN CLUJ <span class="s">·</span></span>
+      <span class="mqi">PENTRU ROMÂNIA <span class="s">·</span></span>
+      <span class="mqi">CUMPĂRĂ <span class="s">·</span></span>
+      <span class="mqi">VINDE <span class="s">·</span></span>
+      <span class="mqi">FĂ BINE <span class="s">·</span></span>
+      <span class="mqi">SECOND-HAND <span class="s">·</span></span>
+    </div>
+  </div>
+
+  <!-- ═══ MANIFESTO ═════════════════════════════ -->
+  <section id="manifesto">
+    <div class="mf-head" data-reveal>
+      <h2>Povestea<br><em>noastră.</em></h2>
+      <p>De ce am construit Vindetz și ce vrem să schimbăm în România.</p>
+    </div>
+
+    <div class="ch-row" data-chapter>
+      <div>
+        <span class="ch-num-label">01 — Problema</span>
+        <span class="ch-num-big">01</span>
+      </div>
+      <div class="ch-body">
+        <h3>Prea multe lucruri bune<br>ajung la <em>gunoi.</em></h3>
+        <p>Milioane de produse încă funcționale sunt aruncate, în timp ce oamenii caută alternative accesibile și sigure pentru a cumpăra și vinde second-hand. Piața are nevoie de o soluție modernă.</p>
+      </div>
+    </div>
+
+    <div class="ch-row" data-chapter>
+      <div>
+        <span class="ch-num-label">02 — Soluția</span>
+        <span class="ch-num-big">02</span>
+      </div>
+      <div class="ch-body">
+        <h3>Un marketplace <em>simplu și sigur,</em><br>construit pentru România.</h3>
+        <p>O platformă modernă, ușor de folosit, cu plăți sigure, livrare integrată și o comunitate activă. Tot ce ai nevoie pentru a cumpăra sau vinde, într-un singur loc.</p>
+        <div class="tags">
+          <span class="tag">Brand românesc</span>
+          <span class="tag">Plăți securizate</span>
+          <span class="tag">Integrare curieri AWB</span>
+          <span class="tag">Comunitate locală</span>
+          <span class="tag">Interfață modernă</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-row" data-chapter>
+      <div>
+        <span class="ch-num-label">03 — Misiunea</span>
+        <span class="ch-num-big">03</span>
+      </div>
+      <div class="ch-body">
+        <h3>Construim o <em>comunitate</em><br>responsabilă.</h3>
+        <p>Reducem risipa, dăm valoare lucrurilor care încă pot fi folosite și contribuim la un viitor mai curat. O alegere mai bună pentru tine și pentru planeta noastră.</p>
+        <div class="tags">
+          <span class="tag">Reducem risipa</span>
+          <span class="tag">Economie circulară</span>
+          <span class="tag">Sustenabilitate</span>
+          <span class="tag">Mediu mai curat</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ══════════════════════════ -->
+  <section id="how">
+    <div class="how-inner">
+      <div class="how-head">
+        <div>
+          <div class="eyebrow eyebrow-dim" data-reveal-dark>Procesul</div>
+          <h2 data-reveal-dark>Cum<br>funcționează?</h2>
+        </div>
+        <p class="sub" data-reveal-dark>De la postare la plată, totul este simplu, sigur și integrat. Vindeți sau cumpărați în câțiva pași.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step" data-step>
+          <div class="step-c lit">01</div>
+          <h4>Postezi</h4>
+          <p>Adaugi produsul rapid cu poze și detalii. Simplu și intuitiv, în câteva minute.</p>
+        </div>
+        <div class="step" data-step>
+          <div class="step-c">02</div>
+          <h4>Cumpărătorul plătește</h4>
+          <p>Plată online securizată. Banii sunt protejați în escrow până la livrare.</p>
+        </div>
+        <div class="step" data-step>
+          <div class="step-c">03</div>
+          <h4>Livrezi</h4>
+          <p>Primești AWB automat și trimiți prin curier integrat (Fan Courier, Sameday).</p>
+        </div>
+        <div class="step" data-step>
+          <div class="step-c">04</div>
+          <h4>Cumpărătorul confirmă</h4>
+          <p>Destinatarul verifică produsul și confirmă că totul este în regulă.</p>
+        </div>
+        <div class="step" data-step>
+          <div class="step-c">05</div>
+          <h4>Primești banii</h4>
+          <p>Sumele ajung direct la tine. Noi păstrăm un comision mic de 5–10%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CATEGORIES ════════════════════════════ -->
+  <section id="cats">
+    <div class="cat-head" data-reveal>
+      <div>
+        <div class="eyebrow">Categorii</div>
+        <h2>Ce poți<br>găsi?</h2>
+      </div>
+      <p>De la haine și electronice până la piese auto și obiecte de colecție. Totul într-un singur loc.</p>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card" data-cat>
+        <div class="cat-img">
+          <img src="https://images.unsplash.com/photo-1562869327-575fcdd475f5?w=900&q=85&fit=crop" alt="Haine second-hand" loading="lazy">
+        </div>
+        <div class="cat-ov"></div>
+        <div class="cat-info">
+          <div class="cat-eye">Cel mai popular</div>
+          <div class="cat-name">Haine</div>
+        </div>
+      </div>
+      <div class="cat-card" data-cat>
+        <div class="cat-img">
+          <img src="https://images.unsplash.com/photo-1647204137620-bc1eadf8b6a4?w=600&q=85&fit=crop" alt="Electronice" loading="lazy">
+        </div>
+        <div class="cat-ov"></div>
+        <div class="cat-info">
+          <div class="cat-eye">Tech &amp; Gadgets</div>
+          <div class="cat-name">Electronice</div>
+        </div>
+      </div>
+      <div class="cat-card" data-cat>
+        <div class="cat-img">
+          <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=600&q=85&fit=crop" alt="Casă și Grădină" loading="lazy">
+        </div>
+        <div class="cat-ov"></div>
+        <div class="cat-info">
+          <div class="cat-eye">Interior &amp; Decor</div>
+          <div class="cat-name">Casă &amp; Grădină</div>
+        </div>
+      </div>
+      <div class="cat-card" data-cat>
+        <div class="cat-img">
+          <img src="https://images.unsplash.com/photo-1521805103424-d8f8430e8933?w=600&q=85&fit=crop" alt="Sport și Hobby" loading="lazy">
+        </div>
+        <div class="cat-ov"></div>
+        <div class="cat-info">
+          <div class="cat-eye">Activ &amp; Sănătos</div>
+          <div class="cat-name">Sport &amp; Hobby</div>
+        </div>
+      </div>
+      <div class="cat-card" data-cat>
+        <div class="cat-img">
+          <img src="https://images.unsplash.com/photo-1669882571612-4a9c7822cd4c?w=600&q=85&fit=crop" alt="Auto" loading="lazy">
+        </div>
+        <div class="cat-ov"></div>
+        <div class="cat-info">
+          <div class="cat-eye">Transport</div>
+          <div class="cat-name">Auto &amp; Moto</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VALUES ════════════════════════════════ -->
+  <section id="values">
+    <div class="val-inner">
+      <div class="val-text" data-reveal-dark>
+        <div class="eyebrow eyebrow-dim">De ce Vindetz</div>
+        <h2>O alegere mai bună, pentru tine și pentru <em>planeta noastră.</em></h2>
+        <p>Fiecare produs cumpărat second-hand înseamnă un produs mai puțin fabricat de la zero. Împreună construim o economie circulară, responsabilă, în România.</p>
+      </div>
+
+      <div class="val-grid">
+        <div class="val-card" data-val>
+          <div class="val-ico"><i class="fa-solid fa-recycle"></i></div>
+          <h4>Reducem risipa</h4>
+          <p>Dăm o a doua viață produselor care altfel ar fi ajuns la gunoi.</p>
+        </div>
+        <div class="val-card" data-val>
+          <div class="val-ico"><i class="fa-solid fa-tag"></i></div>
+          <h4>Prețuri corecte</h4>
+          <p>Cumperi mai ieftin, vinzi mai ușor. Toată lumea câștigă.</p>
+        </div>
+        <div class="val-card" data-val>
+          <div class="val-ico"><i class="fa-solid fa-shield-halved"></i></div>
+          <h4>100% Sigur</h4>
+          <p>Plăți securizate, escrow, dispute &amp; refund, rating utilizatori.</p>
+        </div>
+        <div class="val-card" data-val>
+          <div class="val-ico"><i class="fa-solid fa-users"></i></div>
+          <h4>Brand Românesc</h4>
+          <p>Construit în Cluj, pentru toată România. Comunitate locală activă.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STATS ══════════════════════════════════ -->
+  <section id="stats">
+    <div class="stats-g">
+      <div class="stat-item">
+        <div class="stat-num"><span class="an" data-target="50">0</span>K+</div>
+        <div class="stat-label">Utilizatori estimați — primul an</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="an" data-target="10">0</span>K+</div>
+        <div class="stat-label">Tranzacții estimate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">&euro;<span class="an" data-target="200">0</span>K</div>
+        <div class="stat-label">Venituri estimate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span class="an" data-target="4.5">0</span>+</div>
+        <div class="stat-label">Rating mediu estimat</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LAUNCH ════════════════════════════════ -->
+  <section id="launch">
+    <div class="launch-inner">
+      <div class="launch-badge" data-reveal>
+        <span style="width:5px;height:5px;background:currentColor;border-radius:50%;animation:blink 2s infinite;flex-shrink:0;"></span>
+        Aplicație Mobilă &nbsp;·&nbsp; iOS &amp; Android
+      </div>
+      <h2 class="launch-h2" data-reveal>
+        Lansare<br>
+        <span class="outline">în curând</span><br>
+        pe vindetz.ro
+      </h2>
+      <p class="launch-p" data-reveal>Aplicația Vindetz vine pe iOS și Android. Pregătește-te să cumperi, să vinzi și să faci bine, oriunde te-ai afla.</p>
+      <div class="app-btns" data-reveal>
+        <div class="app-btn">
+          <i class="fa-brands fa-apple app-btn-icon"></i>
+          <div class="app-btn-text">
+            <small>iPhone &amp; iPad</small>
+            <strong>App Store</strong>
+            <div class="soon">Lansare în curând</div>
+          </div>
+        </div>
+        <div class="app-btn and-btn">
+          <i class="fa-brands fa-google-play app-btn-icon"></i>
+          <div class="app-btn-text">
+            <small>Android</small>
+            <strong>Google Play</strong>
+            <div class="soon">Lansare în curând</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════ -->
+  <footer id="footer">
+    <div class="foot-main">
+      <div class="foot-brand">
+        <div class="f-logo">VINDETZ<sup>RO</sup></div>
+        <p class="f-sub">Marketplace românesc pentru produse second-hand. Simplu. Sigur. Aproape de tine.</p>
+        <div class="foot-tagline">Cumpără. Vinde. Redă viață.</div>
+      </div>
+
+      <div class="foot-col">
+        <h5>Platformă</h5>
+        <ul>
+          <li><a href="#">Cum funcționează</a></li>
+          <li><a href="#">Categorii</a></li>
+          <li><a href="#">Postează un anunț</a></li>
+          <li><a href="#">Livrare &amp; Tracking</a></li>
+          <li><a href="#">Siguranță &amp; Plăți</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h5>Companie</h5>
+        <ul>
+          <li><a href="#">Despre noi</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Cariere</a></li>
+          <li><a href="#">Termeni &amp; Condiții</a></li>
+          <li><a href="#">Confidențialitate</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span class="foot-copy">&copy; 2025 Vindetz SRL. Toate drepturile rezervate.</span>
+      <div class="foot-loc">
+        <i class="fa-solid fa-location-dot" style="color:var(--orange);"></i>
+        Din Cluj. Pentru toată România.
+      </div>
+      <a href="https://vindetz.ro" class="foot-url">vindetz.ro &rarr;</a>
+    </div>
+  </footer>
+
+  <script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ─── SET HERO INITIAL STATES (immediate, before events) ── */
+  gsap.set('.hero-title', { y: '108%' });
+  gsap.set(['.hero-badge','.hero-tagline','.hero-right','.hero-scroll-hint'], { opacity: 0, y: 18 });
+  gsap.set('.hero-scroll-hint', { opacity: 0, y: 0 });
+
+  /* ─── LENIS (graceful fallback) ─────────────── */
+  let lenis = null;
+  try {
+    if (typeof Lenis !== 'undefined') {
+      lenis = new Lenis({
+        duration: 1.35,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(time => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+  } catch(e) {
+    lenis = null;
+  }
+  if (!lenis) { document.documentElement.style.scrollBehavior = 'smooth'; }
+
+  /* ─── CURSOR ─────────────────────────────────── */
+  const $cur = document.getElementById('cur');
+  const $ring = document.getElementById('cur-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    gsap.to($cur, { x: mx, y: my, duration: 0.08, ease: 'none' });
+  });
+  (function trackRing() {
+    rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11;
+    gsap.set($ring, { x: rx, y: ry });
+    requestAnimationFrame(trackRing);
+  })();
+  document.querySelectorAll('a, .cat-card, .val-card, .app-btn, #btt').forEach(el => {
+    el.addEventListener('mouseenter', () => { $cur.classList.add('big'); $ring.classList.add('big'); });
+    el.addEventListener('mouseleave', () => { $cur.classList.remove('big'); $ring.classList.remove('big'); });
+  });
+
+  /* ─── NAV SCROLL ─────────────────────────────── */
+  const $nav = document.getElementById('nav');
+  ScrollTrigger.create({
+    start: 'top -70px',
+    onUpdate: self => {
+      self.direction === 1
+        ? $nav.classList.add('scrolled')
+        : (window.scrollY < 70 && $nav.classList.remove('scrolled'));
+    }
+  });
+
+  /* ─── BACK TO TOP ────────────────────────────── */
+  const $btt = document.getElementById('btt');
+  ScrollTrigger.create({
+    start: 'top -400px',
+    onUpdate: self => {
+      self.direction === 1 ? $btt.classList.add('show') : (window.scrollY < 400 && $btt.classList.remove('show'));
+    }
+  });
+  $btt.addEventListener('click', () => {
+    if (lenis) lenis.scrollTo(0, { duration: 1.5 });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ─── HERO ON LOAD ───────────────────────────── */
+  window.addEventListener('DOMContentLoaded', () => {
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    tl.to('.hero-badge',   { opacity: 1, y: 0, duration: .9, delay: .25 })
+      .to('.hero-title',   { y: 0, duration: 1.35, stagger: .14 }, '-=.55')
+      .to('.hero-tagline', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=.75')
+      .to('.hero-right',   { opacity: 1, y: 0, duration: .9, ease: 'power3.out' }, '-=.75')
+      .to('.hero-scroll-hint', { opacity: 1, duration: .7 }, '-=.3');
+  });
+
+  /* ─── HERO PARALLAX (scroll) ─────────────────── */
+  gsap.to('.hero-title', {
+    y: '-12%', ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1 }
+  });
+
+  /* ─── HERO 3D TILT (mouse) ───────────────────── */
+  const $heroInner = document.querySelector('.hero-inner');
+  document.getElementById('hero').addEventListener('mousemove', e => {
+    const x = (e.clientX - innerWidth / 2) / innerWidth;
+    const y = (e.clientY - innerHeight / 2) / innerHeight;
+    gsap.to($heroInner, { rotateX: -y * 2.5, rotateY: x * 2.5, duration: .8, ease: 'power2.out', transformPerspective: 1400 });
+  });
+  document.getElementById('hero').addEventListener('mouseleave', () => {
+    gsap.to($heroInner, { rotateX: 0, rotateY: 0, duration: 1.4, ease: 'power4.out' });
+  });
+
+  /* ─── SCROLL REVEALS ─────────────────────────── */
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 86%', once: true } }
+    );
+  });
+
+  document.querySelectorAll('[data-reveal-dark]').forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power4.out',
+        scrollTrigger: { trigger: el, start: 'top 87%', once: true } }
+    );
+  });
+
+  document.querySelectorAll('[data-chapter]').forEach((ch, i) => {
+    gsap.to(ch, {
+      opacity: 1, y: 0, duration: 1.1, ease: 'power4.out',
+      scrollTrigger: { trigger: ch, start: 'top 83%', once: true }
+    });
+  });
+
+  document.querySelectorAll('[data-step]').forEach((el, i) => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: .85, ease: 'power4.out',
+      delay: i * .1,
+      scrollTrigger: { trigger: '.steps', start: 'top 80%', once: true }
+    });
+  });
+
+  document.querySelectorAll('[data-cat]').forEach((el, i) => {
+    gsap.to(el, {
+      opacity: 1, y: 0, scale: 1, duration: .9, ease: 'power4.out',
+      delay: i * .09,
+      scrollTrigger: { trigger: '.cat-grid', start: 'top 83%', once: true }
+    });
+  });
+
+  document.querySelectorAll('[data-val]').forEach((el, i) => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: .85, ease: 'power4.out',
+      delay: i * .1,
+      scrollTrigger: { trigger: '.val-grid', start: 'top 80%', once: true }
+    });
+  });
+
+  /* ─── CAT CARD 3D TILT ───────────────────────── */
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5;
+      const y = (e.clientY - r.top)  / r.height - .5;
+      gsap.to(card, { rotateX: -y * 7, rotateY: x * 7, duration: .4, ease: 'power2.out', transformPerspective: 700 });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { rotateX: 0, rotateY: 0, duration: .7, ease: 'power4.out' });
+    });
+  });
+
+  /* ─── STATS COUNTER ──────────────────────────── */
+  ScrollTrigger.create({
+    trigger: '#stats', start: 'top 80%', once: true,
+    onEnter: () => {
+      document.querySelectorAll('.an').forEach(el => {
+        const tgt = parseFloat(el.dataset.target);
+        const isFloat = tgt % 1 !== 0;
+        const obj = { v: 0 };
+        gsap.to(obj, {
+          v: tgt, duration: 2.4, ease: 'power2.out',
+          onUpdate: () => { el.textContent = isFloat ? obj.v.toFixed(1) : Math.round(obj.v); }
+        });
+      });
+    }
+  });
+
+  </script>
+</body>
+</html>
