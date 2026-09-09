@@ -592,70 +592,6 @@
     .app-btn.and-btn { background:#0d2218; }
     @media(max-width:768px) { #launch { padding:6rem 1.5rem; } }
 
-    /* ─── FOOTER ─────────────────────────────── */
-    #footer { padding:5rem 3rem 3rem; background:var(--ink); position:relative; }
-    #footer::before {
-      content:''; position:absolute; top:0; left:3rem; right:3rem;
-      height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);
-    }
-    #footer::after {
-      content:'VINDETZ';
-      position:absolute; font-family:var(--sans); font-weight:900;
-      font-size:clamp(7rem,18vw,18rem); letter-spacing:-.05em;
-      color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.035);
-      bottom:0; left:50%; transform:translateX(-50%);
-      pointer-events:none; white-space:nowrap; line-height:1;
-    }
-    .foot-main {
-      max-width:1440px; margin:0 auto; position:relative; z-index:1;
-      display:grid; grid-template-columns:1fr 1fr 1fr;
-      gap:4rem; padding-bottom:4rem;
-      border-bottom:1px solid rgba(255,255,255,.05);
-    }
-    .foot-brand .f-logo {
-      font-family:var(--sans); font-weight:900; font-size:2.6rem;
-      letter-spacing:-.05em; color:#fff; line-height:1; margin-bottom:.9rem;
-    }
-    .foot-brand .f-logo sup {
-      font-size:.5em; background:var(--orange); color:#fff;
-      padding:.1em .3em; border-radius:.25rem;
-      vertical-align:super; margin-top:.15em;
-    }
-    .foot-brand .f-sub {
-      font-size:.84rem; color:rgba(255,255,255,.33);
-      line-height:1.65; max-width:270px; margin-bottom:1.5rem;
-    }
-    .foot-tagline {
-      font-family:var(--serif); font-style:italic;
-      font-size:1.2rem; color:rgba(255,255,255,.52);
-    }
-    .foot-col h5 {
-      font-size:.65rem; font-weight:700; letter-spacing:.18em;
-      text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:1.4rem;
-    }
-    .foot-col ul { list-style:none; }
-    .foot-col li { margin-bottom:.75rem; }
-    .foot-col a {
-      font-size:.84rem; color:rgba(255,255,255,.42); transition:color .3s;
-    }
-    .foot-col a:hover { color:#fff; }
-    .foot-bottom {
-      max-width:1440px; margin:2rem auto 0;
-      display:flex; justify-content:space-between; align-items:center;
-      position:relative; z-index:1;
-    }
-    .foot-copy { font-size:.7rem; color:rgba(255,255,255,.17); }
-    .foot-loc {
-      display:flex; align-items:center; gap:.45rem;
-      font-size:.76rem; color:rgba(255,255,255,.25);
-    }
-    .foot-url { font-size:.84rem; font-weight:700; color:var(--orange); }
-    @media(max-width:900px) { .foot-main { grid-template-columns:1fr; gap:3rem; } }
-    @media(max-width:768px) {
-      #footer { padding:3.5rem 1.5rem 2rem; }
-      .foot-bottom { flex-direction:column; gap:.8rem; align-items:flex-start; }
-    }
-
     /* ─── BACK TO TOP ────────────────────────── */
     #btt {
       position:fixed; bottom:2rem; right:2rem;
@@ -1015,48 +951,6 @@
     </div>
   </section>
 
-  <!-- ═══ FOOTER ════════════════════════════════ -->
-  <footer id="footer">
-    <div class="foot-main">
-      <div class="foot-brand">
-        <div class="f-logo">VINDETZ<sup>RO</sup></div>
-        <p class="f-sub">Marketplace românesc pentru produse second-hand. Simplu. Sigur. Aproape de tine.</p>
-        <div class="foot-tagline">Cumpără. Vinde. Redă viață.</div>
-      </div>
-
-      <div class="foot-col">
-        <h5>Platformă</h5>
-        <ul>
-          <li><a href="#">Cum funcționează</a></li>
-          <li><a href="#">Categorii</a></li>
-          <li><a href="#">Postează un anunț</a></li>
-          <li><a href="#">Livrare &amp; Tracking</a></li>
-          <li><a href="#">Siguranță &amp; Plăți</a></li>
-        </ul>
-      </div>
-
-      <div class="foot-col">
-        <h5>Companie</h5>
-        <ul>
-          <li><a href="#">Despre noi</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Cariere</a></li>
-          <li><a href="#">Termeni &amp; Condiții</a></li>
-          <li><a href="#">Confidențialitate</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="foot-bottom">
-      <span class="foot-copy">&copy; 2025 Vindetz SRL. Toate drepturile rezervate.</span>
-      <div class="foot-loc">
-        <i class="fa-solid fa-location-dot" style="color:var(--orange);"></i>
-        Din Cluj. Pentru toată România.
-      </div>
-      <a href="https://vindetz.ro" class="foot-url">vindetz.ro &rarr;</a>
-    </div>
-  </footer>
 
   <script>
   gsap.registerPlugin(ScrollTrigger);
