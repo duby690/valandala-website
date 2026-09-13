@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    window.location.replace("/vindetz-landing.html");
+    window.location.replace("/valandala-landing.html");
   }, []);
 
   return (
