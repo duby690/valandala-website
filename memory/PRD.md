@@ -1,16 +1,14 @@
 # PRD — Valandala Landing Page
 
 ## Problema originală
-Crearea unei pagini de tip "Under Construction" pentru aplicația mobilă **Valandala** (valandala.ro), inițial numită "Vindetz". Pagina este un fișier HTML static care urmează să fie hostat pe domeniul propriu al utilizatorului.
+Crearea unei pagini de tip "Under Construction" / "Coming Soon" pentru aplicația mobilă **Valandala** (valandala.ro), marketplace C2C la nivel național în România. Pagina este un fișier HTML static care urmează să fie hostat pe domeniul propriu al utilizatorului.
 
 ## Cerințe principale
 - Pagină responsivă HTML/CSS pur (fără framework-uri complexe)
-- Culori bazate pe logo-ul aplicației (galben → portocaliu → roz/magenta)
-- Mesaj "Site în Construcție" / "Lansare în Curând"
-- Indicatori pentru App Store și Google Play (fără linkuri active deocamdată)
-- Fără formular de contact
-- Fără animații la scroll
-- Fără footer links
+- Temă dark/light cu toggle
+- Secțiune hero cu poze de fundal și CTA
+- Formular de înscriere pe lista de așteptare (waitlist)
+- Indicatori App Store și Google Play
 - Limbă: Română
 
 ## Arhitectura curentă
@@ -34,22 +32,23 @@ cp /app/valandala-landing.html /app/frontend/public/valandala-landing.html
 ## Ce s-a implementat
 
 ### Sesiunea 1
-- Creat `vindetz-landing.html` (dark theme, GSAP animations) — legacyvindetz
+- Creat `vindetz-landing.html` (dark theme, GSAP animations) — legacy
 - Pivotare la `valandala-landing.html` (pagină simplă under construction)
 - Configurat `App.js` să redirecționeze imediat la pagina statică HTML
-- Eliminat animații scroll
-- Păstrat pills iOS/Android (App Store / Google Play)
-- Eliminat linkuri footer și buton portocaliu
-- Redesign complet: temă luminoasă bazată pe logo (galben/portocaliu/roz/magenta)
 
 ### Sesiunea 2 (Feb 2026)
-- Eliminat logo-ul mic din bara de navigare (nav)
-- Înlocuit titlul text mare "Valandala." cu logo-ul imaginii, mărit (`clamp(180px, 30vw, 360px)`)
-- Adăugat animație de intrare `fadeUp` pe logo (wrap `div.hero-logo-wrap`)
-- Adăugat animație continuă `float` pe logo (plutire sus-jos cu ușoară rotație)
-- Rezolvat conflict CSS transform prin separarea animațiilor pe 2 elemente (wrap + img)
+- Redesign complet: temă luminoasă bazată pe logo (galben/portocaliu/roz/magenta)
+- Eliminat logo din nav, înlocuit titlu text cu logo imagine (animat float)
+
+### Sesiunea 3 (Oct 2026)
+- Înlocuire completă cu noul HTML uploadat de utilizator
+- Pagină completă cu: header sticky, marquee, hero cu tiles foto, secțiuni multiple
+- Toggle dark/light mode cu persistență în localStorage
+- Formular waitlist (`data-poppy-form`)
+- Secțiuni: "Sună cunoscut?", "Cum funcționează" (4 pași), "De ce Valandala" (6 features), testimoniale (3 quote-uri), footer cu social links
+- Font Poppins adăugat (lipsea din original)
 
 ## Backlog / Viitor
-- Adăugare secțiune cu linkuri reale App Store / Google Play când aplicația este publicată
-- Email de notificare "Anunță-mă la lansare" (dacă utilizatorul dorește)
-- Versiune multi-limbă (RO/EN)
+- Conectare formular waitlist la un serviciu real (ex: Mailchimp, ConvertKit, Poppy)
+- Adăugare linkuri reale App Store / Google Play când aplicația este publicată
+- Adăugare linkuri reale Instagram, TikTok, Facebook
