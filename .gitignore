@@ -86,3 +86,8 @@ android-sdk/
 credentials.json
 *.key
 .credentials
+
+# Backend secrets stay local.
+.env
+.env.*
+!.env.example
