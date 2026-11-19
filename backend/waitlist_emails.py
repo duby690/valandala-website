@@ -50,16 +50,20 @@ async def queue_confirmation(db, subscriber):
     greeting = f"Salut, {escape(subscriber['name'])}!" if subscriber.get('name') else 'Salut!'
     payload = {
         'to': [subscriber['email']],
-        'subject': 'Ești pe lista Valandala. Ne auzim la lansare!',
-        'html': _frame('Îți păstrăm un loc.', f'<p>{greeting}</p><p>Înscrierea ta este salvată. '
-                       'Când Valandala se lansează, primești un email de la noi.</p>'
-                       '<p>Până atunci, poate găsești în dulap o geacă pe care nu o mai porți '
-                       'sau o pereche care merită alte drumuri.</p>'
-                       '<p>Nu ți-am creat un cont în aplicație. Te vom anunța când poți începe.</p>'
-                       '<p>Pe curând,<br>Echipa Valandala</p>'),
+        'subject': 'Valandala · Ești pe listă',
+        'html': _frame('Înscriere confirmată', f'<p>{greeting}</p>'
+                       '<p>Ești pe lista Valandala. Îți scriem când poți intra în aplicație, '
+                       'descoperi produse și publica primul tău anunț.</p>'
+                       '<p>Vei putea vinde ce nu mai folosești și căuta produse de la alți utilizatori.</p>'
+                       '<p>Această înscriere nu creează un cont în aplicație.</p>'
+                       '<p>Ne auzim la lansare,<br>Echipa Valandala</p>'),
         'text': f"Salut{', ' + subscriber['name'] if subscriber.get('name') else ''}!\n\n"
-                'Înscrierea ta pe lista Valandala este salvată. Te anunțăm când se lansează aplicația. '
-                'Nu ți-am creat un cont.\n\nPentru întrebări sau retragerea acordului: info@valandala.ro',
+                'Ești pe lista Valandala. Îți scriem când poți intra în aplicație, '
+                'descoperi produse și publica primul tău anunț.\n\n'
+                'Vei putea vinde ce nu mai folosești și căuta produse de la alți utilizatori.\n\n'
+                'Această înscriere nu creează un cont în aplicație.\n\n'
+                'Ne auzim la lansare,\nEchipa Valandala\n\n'
+                'Pentru întrebări sau retragerea acordului: info@valandala.ro',
     }
     await queue_email(db, f"confirmation/{subscriber['id']}", payload)
 

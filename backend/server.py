@@ -72,7 +72,7 @@ async def get_status_checks():
     
     return status_checks
 
-WAITLIST_MESSAGE = "Ești pe listă! Te anunțăm pe email când se lansează Valandala."
+WAITLIST_MESSAGE = "Ești pe listă. Îți scriem când se lansează Valandala."
 
 
 class WaitlistSignup(BaseModel):
@@ -97,7 +97,7 @@ async def prepare_waitlist():
 @api_router.post("/waitlist")
 async def join_waitlist(signup: WaitlistSignup):
     if not signup.consent:
-        raise HTTPException(422, "Acordul pentru notificarea lansării este necesar.")
+        raise HTTPException(422, "Bifează acordul ca să te putem anunța la lansare.")
     if signup.website:
         return {"success": True, "message": WAITLIST_MESSAGE}
     email = str(signup.email).casefold()
@@ -118,14 +118,14 @@ async def join_waitlist(signup: WaitlistSignup):
         pass
     except PyMongoError:
         logger.exception("Waitlist storage unavailable")
-        raise HTTPException(503, "Înscrierea nu poate fi salvată momentan. Te rugăm să încerci din nou.") from None
+        raise HTTPException(503, "Nu am putut salva înscrierea. Încearcă din nou.") from None
     try:
         subscriber = await db.launch_waitlist.find_one({"email": email, "status": "subscribed"})
         if subscriber:
             await queue_confirmation(db, subscriber)
     except PyMongoError:
         logger.exception("Waitlist receipt could not be queued")
-        raise HTTPException(503, "Înscrierea este salvată, dar confirmarea nu a putut fi pregătită. Poți încerca din nou.") from None
+        raise HTTPException(503, "Ești pe listă, dar nu am putut pregăti emailul de confirmare. Încearcă din nou.") from None
     return {"success": True, "message": WAITLIST_MESSAGE}
 
 
